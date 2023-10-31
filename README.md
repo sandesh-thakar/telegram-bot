@@ -43,6 +43,7 @@ redis-server
 
 ```
 (Open a new terminal)
+source venv/bin/activate
 cd backend
 uvicorn main:app --reload
 ```
@@ -60,6 +61,7 @@ npm start
 
 ```
 (Open a new terminal)
+source venv/bin/activate
 celery -A celery_tasks.celery worker --loglevel=info
 ```
 
@@ -67,6 +69,7 @@ celery -A celery_tasks.celery worker --loglevel=info
 
 ```
 (Open a new terminal)
+source venv/bin/activate
 python telegram_bot.py
 ```
 
