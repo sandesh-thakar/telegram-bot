@@ -1,0 +1,80 @@
+/* src/App.css */
+
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+.message-list {
+  text-align: center;
+  padding: 20px;
+}
+
+.message-list h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.message-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.message-table th,
+.message-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.message-table th {
+  background-color: #f5f5f5;
+  color: #333;
+  font-weight: bold;
+}
+
+.message-table tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.message-table tr:hover {
+  background-color: #e0e0e0;
+}
+
+.message-table td {
+  color: #555;
+}
+
+.message-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Center the table horizontally on larger screens */
+@media screen and (min-width: 768px) {
+  .message-table {
+    margin: 20px auto;
+  }
+}
