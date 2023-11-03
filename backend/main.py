@@ -1,9 +1,10 @@
-from fastapi import FastAPI, Depends, Query
+from fastapi import FastAPI, Depends, Query, WebSocket
 from fastapi.middleware.cors import CORSMiddleware
 from database import get_database
 from models import MessageDB
 from schemas import MessageCreate
 from sqlalchemy.orm import Session
+import asyncio
 
 app = FastAPI()
 
@@ -40,3 +41,22 @@ async def read_messages(
 ):
     messages = db.query(MessageDB).offset(offset).limit(limit).all()
     return messages
+
+def get_messages_from_database():
+    with get_database() as db:
+        messages = db.query(MessageDB).all()
+        return [{"sender": message.sender, "content": message.content, "timestamp": str(message.timestamp)} for message in messages]
+
+@app.websocket("/messages/")
+async def websocket_endpoint(websocket: WebSocket):
+    await websocket.accept()
+
+    while True:
+        try:
+            messages = get_messages_from_database()
+            print(messages)
+            await websocket.send_json(messages)
+            await asyncio.sleep(5)
+        except Exception as ex:
+            print(ex)
+            break

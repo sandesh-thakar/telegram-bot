@@ -1,29 +1,24 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import "./App.css";
 
 const MessageList = () => {
   const [messages, setMessages] = useState([]);
 
   useEffect(() => {
-    const fetchMessages = async () => {
-      try {
-        const response = await axios.get("http://localhost:8000/messages/");
-        console.log(response.data);
-        setMessages(response.data);
-      } catch (error) {
-        console.error("Error fetching messages:", error);
-      }
+    const socket = new WebSocket("ws://localhost:8000/messages/");
+
+    socket.onmessage = (event) => {
+      const messages = JSON.parse(event.data);
+      setMessages(messages);
     };
 
-    // Fetch messages on component mount
-    fetchMessages();
+    socket.onclose = (event) => {
+      console.error("WebSocket closed:", event);
+    };
 
-    // Poll for new messages every 5 seconds
-    const pollInterval = setInterval(fetchMessages, 5000);
-
-    // Clean up the interval on component unmount
-    return () => clearInterval(pollInterval);
+    return () => {
+      socket.close();
+    };
   }, []);
 
   return (
